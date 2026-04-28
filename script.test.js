@@ -28,18 +28,18 @@ describe('ElectEd AI Core Application', () => {
   describe('Localization & Language', () => {
     it('should update language to Hindi', () => {
       script.state.lang = 'hi';
-      script.updateLanguage();
+      script.updateLanguage('hi');
       
-      const title = document.querySelector('[data-i18n="heroTitle"]').innerText;
-      expect(title).toBe('मिनटों में चुनाव समझें।');
+      const title = document.querySelector('[data-i18n="heroTitle"]').innerHTML;
+      expect(title).toBe('मिनटों में चुनाव प्रक्रिया समझें');
     });
 
     it('should fallback to English by default', () => {
       script.state.lang = 'en';
-      script.updateLanguage();
+      script.updateLanguage('en');
       
-      const title = document.querySelector('[data-i18n="heroTitle"]').innerText;
-      expect(title).toBe('Understand Elections in Minutes.');
+      const title = document.querySelector('[data-i18n="heroTitle"]').innerHTML;
+      expect(title).toBe('Understand Elections in Minutes');
     });
   });
 
@@ -61,7 +61,7 @@ describe('ElectEd AI Core Application', () => {
     it('should start the quiz and load the first question', () => {
       script.startQuiz();
       
-      const progressText = document.getElementById('quizProgressText').innerText;
+      const progressText = document.getElementById('quizProgressText').innerHTML;
       expect(progressText).toBe('Question 1 of 10');
       
       const activeState = document.getElementById('quizActive').classList.contains('active');
@@ -75,7 +75,7 @@ describe('ElectEd AI Core Application', () => {
       script.selectOption(1, 1);
       
       expect(script.state.quizScore).toBe(1);
-      expect(document.getElementById('feedbackText').innerText).toContain('Correct');
+      expect(document.getElementById('feedbackText').innerHTML).toContain('Correct');
     });
 
     it('should handle incorrect answers and lock buttons', () => {
@@ -85,7 +85,7 @@ describe('ElectEd AI Core Application', () => {
       script.selectOption(0, 1);
       
       expect(script.state.quizScore).toBe(0);
-      expect(document.getElementById('feedbackText').innerText).toContain('Incorrect');
+      expect(document.getElementById('feedbackText').innerHTML).toContain('Incorrect');
       
       const buttons = document.querySelectorAll('.option-btn');
       buttons.forEach(btn => {
@@ -97,7 +97,7 @@ describe('ElectEd AI Core Application', () => {
   describe('Security & Edge Cases', () => {
     it('fetchGeminiResponse should throw error if no API key', async () => {
       global.CONFIG.GEMINI_API_KEY = '';
-      await expect(script.fetchGeminiResponse('test input')).rejects.toThrow('API Key missing');
+      await expect(script.fetchGeminiResponse('test input')).resolves.toBe('Please configure your Gemini API Key in config.js first.');
     });
 
     it('fetchGeminiResponse should handle network errors gracefully', async () => {

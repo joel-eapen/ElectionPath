@@ -260,7 +260,7 @@ function renderTimeline(activeIndex) {
     journeyPhases.forEach((phase, index) => {
         const step = document.createElement('div');
         step.className = `step-node ${index === activeIndex ? 'active' : ''} ${index < activeIndex ? 'completed' : ''}`;
-        step.innerText = index + 1;
+        step.textContent = index + 1;
         step.addEventListener('click', () => renderTimeline(index));
         stepsContainer.appendChild(step);
     });
@@ -353,7 +353,7 @@ function addChatMessage(text, sender) {
         
         contentDiv.innerHTML = htmlLines.join('');
     } else {
-        contentDiv.innerText = text;
+        contentDiv.textContent = text;
     }
 
     msgDiv.appendChild(contentDiv);
@@ -443,22 +443,22 @@ function switchQuizState(stateId) {
 
 function loadQuestion() {
     const qData = quizData[state.quizCurrentIndex];
-    document.getElementById('questionText').innerText = qData.q;
+    document.getElementById('questionText').textContent = qData.q;
     
     const optsContainer = document.getElementById('optionsContainer');
     optsContainer.innerHTML = '';
     
-    document.getElementById('feedbackText').innerText = '';
+    document.getElementById('feedbackText').textContent = '';
     document.getElementById('nextQuestionBtn').classList.add('hidden');
 
     // Update Progress
-    document.getElementById('quizProgressText').innerText = `Question ${state.quizCurrentIndex + 1} of ${quizData.length}`;
+    document.getElementById('quizProgressText').textContent = `Question ${state.quizCurrentIndex + 1} of ${quizData.length}`;
     document.getElementById('quizProgressFill').style.width = `${((state.quizCurrentIndex) / quizData.length) * 100}%`;
 
     qData.opts.forEach((opt, index) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.innerText = opt;
+        btn.textContent = opt;
         btn.addEventListener('click', () => selectOption(index, qData.ans));
         optsContainer.appendChild(btn);
     });
@@ -480,7 +480,7 @@ function selectOption(selectedIndex, correctIndex) {
     if (selectedIndex === correctIndex) {
         // Correct answer animation is handled by CSS .correct class
         buttons[selectedIndex].classList.add('correct');
-        document.getElementById('feedbackText').innerText = "Correct! Well done.";
+        document.getElementById('feedbackText').textContent = "Correct! Well done.";
         document.getElementById('feedbackText').className = "feedback-text correct";
         state.quizScore++;
         if(state.voiceEnabled) speakText("Correct!");
@@ -488,7 +488,7 @@ function selectOption(selectedIndex, correctIndex) {
         // Add shake animation class
         buttons[selectedIndex].classList.add('wrong');
         buttons[correctIndex].classList.add('correct');
-        document.getElementById('feedbackText').innerText = "Incorrect. The highlighted answer is correct.";
+        document.getElementById('feedbackText').textContent = "Incorrect. The highlighted answer is correct.";
         document.getElementById('feedbackText').className = "feedback-text wrong";
         if(state.voiceEnabled) speakText("Incorrect.");
     }
@@ -508,15 +508,15 @@ function nextQuestion() {
 
 function showQuizResult() {
     switchQuizState('quizResult');
-    document.getElementById('finalScore').innerText = `${state.quizScore}/${quizData.length}`;
+    document.getElementById('finalScore').textContent = `${state.quizScore}/${quizData.length}`;
     
     const msgEl = document.getElementById('resultMessage');
     if (state.quizScore >= 8) {
-        msgEl.innerText = "Excellent! You are fully prepared for election day!";
+        msgEl.textContent = "Excellent! You are fully prepared for election day!";
     } else if (state.quizScore >= 5) {
-        msgEl.innerText = "Good job! A quick review of the glossary might help.";
+        msgEl.textContent = "Good job! A quick review of the glossary might help.";
     } else {
-        msgEl.innerText = "Keep learning! The election journey guide above has all the answers.";
+        msgEl.textContent = "Keep learning! The election journey guide above has all the answers.";
     }
 
     // Populate review container
@@ -602,7 +602,7 @@ function renderChart() {
         // Add label
         const lblIndia = document.createElement('span');
         lblIndia.className = 'bar-label';
-        lblIndia.innerText = d.india + '%';
+        lblIndia.textContent = d.india + '%';
         barIndia.appendChild(lblIndia);
         
         // Global Bar
@@ -610,7 +610,7 @@ function renderChart() {
         barGlobal.className = 'bar global';
         const lblGlobal = document.createElement('span');
         lblGlobal.className = 'bar-label';
-        lblGlobal.innerText = d.global + '%';
+        lblGlobal.textContent = d.global + '%';
         barGlobal.appendChild(lblGlobal);
 
         // Animate heights using setTimeout
@@ -624,7 +624,7 @@ function renderChart() {
         
         const label = document.createElement('div');
         label.className = 'chart-label';
-        label.innerText = d.year;
+        label.textContent = d.year;
 
         group.appendChild(wrapper);
         group.appendChild(label);
@@ -632,4 +632,4 @@ function renderChart() {
     });
 }
 
-if (typeof module !== 'undefined' && module.exports) { module.exports = { state, speakText, updateLanguage, initJourney, initGlossary, fetchGeminiResponse, selectOption, startQuiz, resetQuiz, showQuizResult }; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = { state, speakText, updateLanguage, fetchGeminiResponse, selectOption, startQuiz }; }
