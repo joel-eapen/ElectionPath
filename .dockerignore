@@ -1,0 +1,8 @@
+node_modules/
+package.json
+package-lock.json
+jest.config.js
+jest.setup.js
+script.test.js
+.gitignore
+README.md
