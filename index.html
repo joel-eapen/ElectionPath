@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectEd AI – Election Journey Assistant</title>
+    <meta name="description" content="Understand the election process in a simple, interactive, and engaging way.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🗳️</span>
+                <span class="logo-text" data-i18n="logo">ElectEd AI</span>
+            </div>
+            <div class="nav-controls">
+                <button id="voiceToggle" class="btn-icon" aria-label="Toggle Voice Reading" title="Toggle Voice Reading">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                </button>
+                <div class="lang-switcher">
+                    <button id="langEn" class="lang-btn active">EN</button>
+                    <button id="langHi" class="lang-btn">HI</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <div class="badge" data-i18n="heroBadge">Your Guide to Democracy</div>
+                <h1 data-i18n="heroTitle">Understand Elections in Minutes</h1>
+                <p data-i18n="heroSubtitle">A simple, interactive, and engaging assistant for first-time voters and anyone wanting to navigate the democratic process with confidence.</p>
+                <button id="startJourneyBtn" class="btn-primary" data-i18n="heroCTA">Start Your Journey</button>
+            </div>
+            <div class="hero-graphics">
+                <div class="glow-orb orb-1"></div>
+                <div class="glow-orb orb-2"></div>
+                <div class="glass-card floating">
+                    <div class="card-icon">🎯</div>
+                    <h3 data-i18n="heroCardTitle">Smart Insights</h3>
+                    <p data-i18n="heroCardDesc">AI-powered answers to all your voting questions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Election Journey -->
+        <section id="journey" class="section">
+            <div class="section-header">
+                <h2 data-i18n="journeyTitle">Your Election Journey</h2>
+                <p data-i18n="journeySubtitle">Follow these 6 steps to make your voice heard.</p>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-progress-bar">
+                    <div class="timeline-progress" id="timelineProgress"></div>
+                </div>
+                <div class="timeline-steps" id="timelineSteps">
+                    <!-- Journey Steps will be rendered here by JS -->
+                </div>
+            </div>
+            <div class="journey-content-wrapper glass-panel" id="journeyContent">
+                <!-- Journey Content will be rendered here by JS -->
+            </div>
+        </section>
+
+        <!-- Smart Assistant (Gemini AI) -->
+        <section id="assistant" class="section bg-alt">
+            <div class="section-header">
+                <h2 data-i18n="assistantTitle">Smart Assistant</h2>
+                <p data-i18n="assistantSubtitle">Ask any question about the election process.</p>
+            </div>
+            <div class="chat-container glass-panel">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="message-content">
+                            <p data-i18n="chatWelcome">Hello! I'm your election assistant. How can I help you today? Try asking: "Am I eligible to vote?" or "What documents do I need?"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Type your question here..." data-i18n-placeholder="chatPlaceholder">
+                    <button id="sendBtn" class="btn-icon primary" aria-label="Send Message">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adaptive Quiz System -->
+        <section id="quiz" class="section">
+            <div class="section-header">
+                <h2 data-i18n="quizTitle">Test Your Knowledge</h2>
+                <p data-i18n="quizSubtitle">Take a quick quiz to see how ready you are for election day.</p>
+            </div>
+            <div class="quiz-container glass-panel">
+                <div id="quizIntro" class="quiz-state active">
+                    <h3 data-i18n="quizIntroTitle">Are you ready?</h3>
+                    <p data-i18n="quizIntroDesc">10 questions covering eligibility, process, and terms.</p>
+                    <button id="startQuizBtn" class="btn-primary mt-4" data-i18n="startQuizBtn">Start Quiz</button>
+                </div>
+                
+                <div id="quizActive" class="quiz-state">
+                    <div class="quiz-header">
+                        <span class="quiz-progress" id="quizProgressText">Question 1 of 10</span>
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" id="quizProgressFill"></div>
+                        </div>
+                    </div>
+                    <h3 id="questionText" class="question-text"></h3>
+                    <div id="optionsContainer" class="options-grid">
+                        <!-- Options injected by JS -->
+                    </div>
+                    <div id="feedbackText" class="feedback-text"></div>
+                    <button id="nextQuestionBtn" class="btn-secondary hidden" data-i18n="nextBtn">Next Question</button>
+                </div>
+
+                <div id="quizResult" class="quiz-state">
+                    <div class="score-circle">
+                        <span id="finalScore">0/10</span>
+                    </div>
+                    <h3 id="resultMessage" data-i18n="resultMsg"></h3>
+                    <div id="quizReview" class="quiz-review-container"></div>
+                    <button id="restartQuizBtn" class="btn-primary mt-4" data-i18n="restartQuizBtn">Try Again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searchable Glossary -->
+        <section id="glossary" class="section bg-alt">
+            <div class="section-header">
+                <h2 data-i18n="glossaryTitle">Election Glossary</h2>
+                <p data-i18n="glossarySubtitle">Confused by the jargon? Find simple definitions here.</p>
+            </div>
+            <div class="glossary-controls">
+                <div class="search-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="glossarySearch" placeholder="Search terms (e.g., EVM, Ballot)..." data-i18n-placeholder="glossarySearchPlaceholder">
+                </div>
+            </div>
+            <div class="glossary-grid" id="glossaryGrid">
+                <!-- Glossary items injected by JS -->
+            </div>
+        </section>
+
+        <!-- Data Visualization Section -->
+        <section id="data-viz" class="section">
+            <div class="section-header">
+                <h2 data-i18n="dataVizTitle">Voter Turnout Insights</h2>
+                <p data-i18n="dataVizSubtitle">Understanding participation through data.</p>
+            </div>
+            <div class="chart-container glass-panel">
+                <div class="chart-header">
+                    <h3 data-i18n="chartTitle">Recent Election Turnout %</h3>
+                    <div class="chart-legend">
+                        <span class="legend-item"><span class="color-box india"></span> India</span>
+                        <span class="legend-item"><span class="color-box global"></span> Global Avg</span>
+                    </div>
+                </div>
+                <div class="simple-bar-chart" id="turnoutChart">
+                    <!-- Bars injected by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">🗳️</span>
+                <span>ElectEd AI</span>
+            </div>
+            <p class="disclaimer" data-i18n="disclaimer">
+                <strong>Disclaimer:</strong> This is an educational tool and not an official election authority. Please refer to official government sources for binding information.
+            </p>
+            <p class="credits" data-i18n="credits">Built for civic education & hackathons. © 2026</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
