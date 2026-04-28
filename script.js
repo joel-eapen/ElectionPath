@@ -631,3 +631,5 @@ function renderChart() {
         chartContainer.appendChild(group);
     });
 }
+
+if (typeof module !== 'undefined' && module.exports) { module.exports = { state, speakText, updateLanguage, initJourney, initGlossary, fetchGeminiResponse, selectOption, startQuiz, resetQuiz, showQuizResult }; }

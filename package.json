@@ -1,0 +1,25 @@
+{
+  "name": "electionpath",
+  "version": "1.0.0",
+  "description": "**ElectEd AI** is a simple, modern, and interactive civic guide designed to help first-time voters and citizens easily understand the democratic electoral process. Built with a premium, minimalist design, it offers a guided journey, an AI-powered smart assistant, and an interactive quiz to test your knowledge.",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joel-eapen/ElectionPath.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/joel-eapen/ElectionPath/issues"
+  },
+  "homepage": "https://github.com/joel-eapen/ElectionPath#readme",
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0"
+  }
+}
